@@ -30,7 +30,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SegundaTela()
+                          builder: (context) => SegundaTela("teste testando")
                       )
                   );
                 },
