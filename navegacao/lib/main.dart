@@ -3,6 +3,10 @@ import 'package:navegacao/SegundaTela.dart';
 
 void main() {
   runApp(MaterialApp(
+    initialRoute: "/",
+    routes: {
+      SegundaTela.routeName : (context) => SegundaTela()
+    },
     home: TelaPrincipal()
   ));
 }
@@ -27,11 +31,16 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           children: [
             TextButton(
                 onPressed: (){
-                  Navigator.push(
+                  /*Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => SegundaTela("teste testando")
                       )
+                  );*/
+                  Navigator.pushNamed(
+                      context,
+                      "/secundaria",
+                      arguments: SegundaTela("teste testando")
                   );
                 },
                 child: Text("Ir para próxima tela")

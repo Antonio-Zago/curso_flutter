@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:navegacao/main.dart';
 
 class SegundaTela extends StatefulWidget {
+
+  static const routeName = '/secundaria';
 
   String? valor;
   //Parametro opcional
@@ -14,6 +17,9 @@ class SegundaTela extends StatefulWidget {
 class _SegundaTelaState extends State<SegundaTela> {
   @override
   Widget build(BuildContext context) {
+
+    final args = ModalRoute.of(context)!.settings.arguments as SegundaTela;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Tela secundária"),
@@ -22,7 +28,7 @@ class _SegundaTelaState extends State<SegundaTela> {
       body: Container(
         child: Column(
           children: [
-            Text("Segunda tela ${widget.valor}")
+            Text("Segunda tela ${args.valor}")
           ],
         ),
       ),
