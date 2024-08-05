@@ -38,6 +38,51 @@ class _HomeState extends State<Home> {
     return postagens;
   }
 
+  _Postar() async{
+    String url = "https://jsonplaceholder.typicode.com/posts";
+    http.Response response = await http.post(Uri.parse(url),
+                                              headers: {
+                                                'Content-type': 'application/json; charset=UTF-8',
+                                              },
+                                              body: json.encode( {
+                                                "userId": "1",
+                                                "id": null,
+                                                "title": "titulo",
+                                                "body" : "body"
+                                              }));
+
+    print(response.statusCode);
+
+  }
+
+  _Put() async{
+    String url = "https://jsonplaceholder.typicode.com/posts/1";
+    http.Response response = await http.put(Uri.parse(url),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode( {
+          "userId": "1",
+          "id": null,
+          "title": "titulo",
+          "body" : "body"
+        }));
+
+    print(response.statusCode);
+
+  }
+
+  _Delete() async{
+    String url = "https://jsonplaceholder.typicode.com/posts/1";
+    http.Response response = await http.delete(Uri.parse(url),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        });
+
+    print(response.statusCode);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,48 +90,75 @@ class _HomeState extends State<Home> {
         title: Text("Consumo de serviços avançado"),
         backgroundColor: Colors.green,
       ),
-      body: FutureBuilder<List<Post>>(
-        future: RecuperarPosts(),
-        builder: (context, snapshot){
-          String resultado;
-          switch (snapshot.connectionState) {
-              case ConnectionState.none :
-                print("none");
-                resultado = "none";
-                break;
-              case ConnectionState.waiting:
-                print("waiting");
-                return CircularProgressIndicator();
-                break;
-              case ConnectionState.active:
-                resultado = "active";
-                print("active");
-                break;
-              case ConnectionState.done:
-                if(snapshot.hasError){
-                  resultado = "Erro";
-                }
-                else{
-                  return ListView.builder(
-                    itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index){
-                        return ListTile(
-                          title: Text(snapshot.data![index].id.toString()),
-                          subtitle: Text(snapshot.data![index].body),
-                        );
-                      }
-                  );
-                }
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                TextButton(
+                    onPressed: () => _Postar(),
+                    child: Text("Salvar")
+                ),
+                TextButton(
+                    onPressed: () => _Put(),
+                    child: Text("Atualizar")
+                ),
+                TextButton(
+                    onPressed: () => _Delete(),
+                    child: Text("Deletar")
+                ),
+              ],
+            ),
+            Expanded(
+                child: FutureBuilder<List<Post>>(
+                  future: RecuperarPosts(),
+                  builder: (context, snapshot){
+                    String resultado;
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none :
+                        print("none");
+                        resultado = "none";
+                        break;
+                      case ConnectionState.waiting:
+                        print("waiting");
+                        return CircularProgressIndicator();
+                        break;
+                      case ConnectionState.active:
+                        resultado = "active";
+                        print("active");
+                        break;
+                      case ConnectionState.done:
+                        if(snapshot.hasError){
+                          resultado = "Erro";
+                        }
+                        else{
+                          return  ListView.builder(
+                              itemCount: snapshot.data?.length,
+                              itemBuilder: (context, index){
+                                return ListTile(
+                                  title: Text(snapshot.data![index].id.toString()),
+                                  subtitle: Text(snapshot.data![index].body),
+                                );
+                              }
+                          );
+                        }
 
-                break;
-            }
-            return Container(
-              child: Text(
-                  resultado
-              ),
-            );
-        },
-      ),
+                        break;
+                    }
+                    return Container(
+                      child: Text(
+                          resultado
+                      ),
+                    );
+                  },
+                ),
+            )
+          ],
+        ),
+      )
+
+
     );
   }
 }
