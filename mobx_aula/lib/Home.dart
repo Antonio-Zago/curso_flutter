@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
+import 'package:mobx_aula/Principal.dart';
 import 'package:mobx_aula/controller.dart';
 
 class Home extends StatefulWidget {
@@ -32,7 +33,13 @@ class _HomeState extends State<Home> {
     disposer = reaction(
           (_) => controller.logado,
         (valorLogado){
-          print("logado: $valorLogado");
+            if(valorLogado){
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                    builder: (_) => Principal()
+                )
+              );
+            }
         }
     );
   }
