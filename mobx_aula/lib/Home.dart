@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mobx_aula/Principal.dart';
 import 'package:mobx_aula/controller.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,14 +14,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  Controller controller = Controller();
+  late Controller controller;
 
   ReactionDisposer? disposer;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
+
+    controller = Provider.of<Controller>(context);
+
     //autorun((_){
       //print("Dentro da home:  $controller.email");
     //});

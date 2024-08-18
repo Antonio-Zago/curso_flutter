@@ -3,6 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:mobx_aula/item_controller.dart';
 import 'package:mobx_aula/principal_controller.dart';
+import 'package:provider/provider.dart';
+
+import 'controller.dart';
 
 class Principal extends StatefulWidget {
   @override
@@ -49,11 +52,14 @@ class _PrincipalState extends State<Principal> {
 
   @override
   Widget build(BuildContext context) {
+
+    final controller = Provider.of<Controller>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Tarefas",
-          style: TextStyle(fontSize: 25, color: Colors.white),
+          controller.email,
+          style: TextStyle(fontSize: 25),
         ),
       ),
       body: Observer(
